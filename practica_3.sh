@@ -19,7 +19,7 @@ else
                         nombreCompleto=$(echo "$linea" | cut -d ',' -f 3)
                         if [  "$nombre" -a "$password" -a "$nombreCompleto" ]
                         then    
-                                sudo useradd $nombre -c "$nombreCompleto" -m -k /etc/skel -K UID_MIN=1815 -U 2> /dev/null
+                                useradd $nombre -c "$nombreCompleto" -m -k /etc/skel -K UID_MIN=1815 -U 2> /dev/null
                                 if [ $? -eq 0 ]
                                 then
                                         chpasswd "$nombre:$password"
@@ -48,10 +48,10 @@ else
                         if [ "$nombre"  ]
                         then
                                 home=$(getent passwd "$nombre" | cut -d ':' -f 6)
-                                sudo tar -cfzp /extra/backup/"$nombre".tar "$home" 2> /dev/null
+                                tar -cfzp /extra/backup/"$nombre".tar "$home" 2> /dev/null
                                 if [ $? -eq 0 ]
                                 then    
-                                        sudo userdel -r "$nombre" 2> /dev/null
+                                        userdel -r "$nombre" 2> /dev/null
 
                                 fi      
                         fi
