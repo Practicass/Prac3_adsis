@@ -21,7 +21,7 @@ then
             done
             # ADDING NEW USER
             id | grep "${user_fields[0]}"
-            if [ $? -eq 0 ]
+            if [ $? -eq 1 ]
             then
 				useradd -m -k /etc/skel -U -K UID_MIN=1815 -c "${user_fields[2]}" "${user_fields[0]}" &>/dev/null
                 usermod -aG 'sudo' ${user_fields[0]}
