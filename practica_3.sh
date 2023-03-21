@@ -92,14 +92,14 @@ then
         echo "Numero incorrecto de parametros"
         exit 1
 else
-        if [ $1 == "-a" ]
+        if [ "$1" == "-a" ]
         then
                 while  read linea; 
                 do
                         nombre=$(echo "$linea" | cut -d ',' -f 1)
                         password=$(echo "$linea" | cut -d ',' -f 2)
                         nombreCompleto=$(echo "$linea" | cut -d ',' -f 3)
-                        if [  "$nombre" -a "$password" -a "$nombreCompleto" ]
+                        if [   -z "$nombre" -a -z "$password" -a -z "$nombreCompleto" -z ]
                         then    
                                 useradd $nombre -c "$nombreCompleto" -m -k /etc/skel -K UID_MIN=1815 -U &> /dev/null
                                 if [ $? -eq 0 ]
@@ -116,9 +116,9 @@ else
                                 echo "Campo invalido"
                                 exit 1
                         fi
-                done < $2
+                done < "$2"
 
-        elif [ $1 == "-s" ]
+        elif [ "$1" == "-s" ]
         then
                 if [ ! -d /extra/backup ]
                 then
