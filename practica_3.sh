@@ -116,7 +116,7 @@ else
                                 echo "Campo invalido"
                                 exit 1
                         fi
-                done < "$2"
+                done < $2
 
         elif [ $1 == "-s" ]
         then
