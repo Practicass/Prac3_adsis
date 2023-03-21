@@ -111,7 +111,7 @@ else
         
                                 else
                                         id=$(id -u "$nombre")
-                                        echo "El usuario "$id" ya existe"
+                                        echo "El usuario "$nombre" ya existe"
                                 fi
                         else
                                 echo "Campo invalido"
