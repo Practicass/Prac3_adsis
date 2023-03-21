@@ -81,8 +81,8 @@
 
 
 
-permisos=$(id | cut -c 5)
-if [ "$permisos" -ne 0 ]
+
+if [ $EUID -ne 0 ]
 then
         echo "Este script necesita privilegios de administracion"
         exit 1
@@ -92,7 +92,7 @@ then
         echo "Numero incorrecto de parametros"
         exit 1
 else
-        if [ "$1" == "-a" ]
+        if [ $1 == "-a" ]
         then
                 while  read linea; 
                 do
@@ -118,7 +118,7 @@ else
                         fi
                 done < "$2"
 
-        elif [ "$1" == "-s" ]
+        elif [ $1 == "-s" ]
         then
                 if [ ! -d /extra/backup ]
                 then
