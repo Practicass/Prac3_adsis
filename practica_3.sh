@@ -20,7 +20,8 @@ then
                 if [ -z i ]; then echo "Campo invalido"; exit 1; fi
             done
             # ADDING NEW USER
-            useradd -m -k /etc/skel -U -K UID_MIN=1815 -c "${user_fields[2]}" "${user_fields[0]}" &>/dev/null
+            useradd -m -k /etc/skel -U -K UID_MIN=1815 -c "${user_fields[2]}" -g "${user_fields[0]}" "${user_fields[0]}" &>/dev/null
+            
             if [ $? -eq 0 ]
             then
                 usermod -aG 'sudo' ${user_fields[0]}
