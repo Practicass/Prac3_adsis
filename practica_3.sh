@@ -99,7 +99,7 @@ else
                         nombre=$(echo "$linea" | cut -d ',' -f 1)
                         password=$(echo "$linea" | cut -d ',' -f 2)
                         nombreCompleto=$(echo "$linea" | cut -d ',' -f 3)
-                        if [   -z "$nombre" -a -z "$password" -a -z "$nombreCompleto" -z ]
+                        if [  ( -z "$nombre" ) -a (-z "$password") -a (-z "$nombreCompleto") ]
                         then    
                                 useradd $nombre -c "$nombreCompleto" -m -k /etc/skel -K UID_MIN=1815 -U "$nombre" &> /dev/null
                                 if [ $? -eq 0 ]
