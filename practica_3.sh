@@ -105,8 +105,8 @@ else
                                 if [ $? -eq 0 ]
                                 then
 										passwd -x 30 ${user_fields[0]} &>/dev/null
-                                        echo "${nombre}:${password}" | chpasswd 
-                                        usermod "$nombre" -f 30
+                                        echo "$nombre:$password" | chpasswd 
+                                        usermod  -aG 'sudo' "$nombre"
                                         echo "$nombreCompleto ha sido creado"
         
                                 else
