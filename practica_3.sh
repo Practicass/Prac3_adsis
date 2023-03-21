@@ -1,4 +1,4 @@
-# #!/bin/bash
+# # #!/bin/bash
 # if [ $EUID -ne 0 ]; 
 # then 
 # 	echo "Este script necesita privilegios de administracion"; 
@@ -124,7 +124,10 @@ else
                 if [ ! -d /extra ]
                 then
                         mkdir -p /extra/backup &> /dev/null
-                fi
+                elif [ ! -d /extra/backup ]
+				then 
+					mkdir /extra/backup
+				fi
                 while read linea
                 do
                         nombre=$(echo "$linea" | cut -d ',' -f 1)
