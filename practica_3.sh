@@ -44,7 +44,7 @@ then
             do
                 IFS=,
                 read -ra user_fields <<< "$user"
-                if [ ${#user_fields[@]} -lt 1  ]; then exit 1; fi
+                if [ ${#user_fields[@]} -ne 1 -a ${#user_fields[@]} -ne 3  ]; then exit 1; fi
                 for i in "${user_fields[@]}"
                 do 
                     if [ -z i ]; then echo "Campo invalido"; exit 1; fi
