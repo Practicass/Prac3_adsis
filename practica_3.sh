@@ -20,10 +20,9 @@ then
                 if [ -z i ]; then echo "Campo invalido"; exit 1; fi
             done
             # ADDING NEW USER
-            id | grep "${user_fields[2]}"
-            if [ $? -eq 1 ]
+            useradd -m -k /etc/skel -U -K UID_MIN=1815 -c "${user_fields[2]}" "${user_fields[0]}" &>/dev/null
+            if [ $? -eq 0 ]
             then
-				useradd -m -k /etc/skel -U -K UID_MIN=1815 -c "${user_fields[2]}" "${user_fields[0]}" &>/dev/null
                 usermod -aG 'sudo' ${user_fields[0]}
                 passwd -x 30 ${user_fields[0]} &>/dev/null
                 echo "${user_fields[0]}:${user_fields[1]}" | chpasswd
@@ -44,7 +43,7 @@ then
             do
                 IFS=,
                 read -ra user_fields <<< "$user"
-                if [ ${#user_fields[@]} -ne 1 -a ${#user_fields[@]} -ne 3 ]; then exit 1; fi
+                if [ ${#user_fields[@]} -ne 1 -o ${#user_fields[@]} -ne 3 ]; then exit 1; fi
                 for i in "${user_fields[@]}"
                 do 
                     if [ -z i ]; then echo "Campo invalido"; exit 1; fi
