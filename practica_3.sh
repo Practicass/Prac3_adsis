@@ -1,7 +1,9 @@
 # #!/bin/bash
-
-
-if [ $EUID -ne 0 ]; then echo "Este script necesita privilegios de administracion"; exit 1; fi
+if [ $EUID -ne 0 ]; 
+then 
+	echo "Este script necesita privilegios de administracion"; 
+	exit 1; 
+fi
 if [ $# -eq 2 ]
 then
     # ADD USER
@@ -18,14 +20,16 @@ then
                 if [ -z i ]; then echo "Campo invalido"; exit 1; fi
             done
             # ADDING NEW USER
-            useradd -m -k /etc/skel -U -K UID_MIN=1815 -c "${user_fields[2]}" "${user_fields[0]}" &>/dev/null
+            id | grep "${user_fields[0]}"
             if [ $? -eq 0 ]
             then
+				useradd -m -k /etc/skel -U -K UID_MIN=1815 -c "${user_fields[2]}" "${user_fields[0]}" &>/dev/null
                 usermod -aG 'sudo' ${user_fields[0]}
                 passwd -x 30 ${user_fields[0]} &>/dev/null
                 echo "${user_fields[0]}:${user_fields[1]}" | chpasswd
                 echo "${user_fields[2]} ha sido creado"
-            else echo "El usuario ${user_fields[0]} ya existe".
+            else 
+				echo "El usuario ${user_fields[0]} ya existe".
             fi
         done < $2
     # DELETE USER
