@@ -121,7 +121,7 @@ else
 
         elif [ "$1" == "-s" ]
         then
-                if [ ! -d /extra/backup ]
+                if [ ! -d /extra ]
                 then
                         mkdir -p /extra/backup &> /dev/null
                 fi
