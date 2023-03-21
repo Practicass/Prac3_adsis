@@ -1,4 +1,86 @@
 # #!/bin/bash
+#funcion para los mensajes de error
+usage(){
+	msg=("Este script necesita privilegios de administracion" "Numero incorrecto de parametros" "Campo invalido" "Opcion invalida")
+	echo "${msg[$1]}"
+	exit 1
+}
+
+#funcion para añadir usuario
+adduser(){
+	OLDIFS=$IFS
+	IFS=,
+	while read user pass name
+	do
+		if [ "$user" =   "" -o "$pass" = "" -o "$name" = "" ]
+		then
+		       	usage 2
+		fi
+		useradd -c "$name" "$user" -m -k /etc/skel -K UID_MIN=1815 -U 2>/dev/null
+		#comprobamos si existe el usuario
+		if [ "$?" -ne 0 ]
+		then 
+			echo "El usuario $user ya existe"
+		else
+			echo "$user:$pass" | chpasswd
+			usermod "$user" -f 30
+			echo "$name ha sido creado"
+		fi
+	done < $1
+}
+
+#borrar usuario
+delUser(){
+	if [ ! -d /extra/backup ]
+	then
+		mkdir -p /extra/backup
+	fi
+	OLDIFS=$IFS
+	IFS=,
+	while read user pass name
+	do
+		userHome=$(getent passwd "$user" | cut -d: -f6)
+		tar czfp /extra/backup/"$user".tar "$userHome" 2>/dev/null
+		if [ "$?" -eq 0 ]
+		then
+			userdel -r "$user" 2>/dev/null
+		fi
+	done < $1
+}
+
+#main
+
+if [ "$UID" -ne 0 ]
+then
+	usage 0
+fi
+
+if [ "$#" -ne 2 ]
+then 
+	usage 1
+else
+	if [ "$1" = "-a" ]
+	then
+		addUser $2
+	elif [ "$1" = "-s" ]
+	then 
+		delUser $2
+	else
+		usage 3 >&2
+	fi	
+	fi
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
