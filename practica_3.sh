@@ -104,9 +104,10 @@ else
                                 useradd $nombre -c "$nombreCompleto" -m -k /etc/skel -K UID_MIN=1815 -U "$nombre" &> /dev/null
                                 if [ $? -eq 0 ]
                                 then
-                                        chpasswd "$nombre:$password"
+										passwd -x 30 ${user_fields[0]} &>/dev/null
+                                        echo "$nombre:$password" | chpasswd 
                                         usermod "$nombre" -f 30
-                                        echo ""$nombreCompleto" ha sido creado"
+                                        echo "$nombreCompleto ha sido creado"
         
                                 else
                                         id=$(id -u "$nombre")
