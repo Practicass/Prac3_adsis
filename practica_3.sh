@@ -123,7 +123,7 @@ else
         then
                 if [ ! -d /extra ]
                 then
-                        mkdir -p /extra/backup &> /dev/null
+                        mkdir -p /extra/backup 
                 elif [ ! -d /extra/backup ]
 				then 
 					mkdir /extra/backup
@@ -131,7 +131,7 @@ else
                 while read linea
                 do
                         nombre=$(echo "$linea" | cut -d ',' -f 1)
-                        if [ "$nombre"  ]
+                        if [ -n "$nombre"  ]
                         then
                                 home=$(getent passwd "$nombre" | cut -d ':' -f 6)
                                 tar -cfzp /extra/backup/"$nombre".tar "$home" &> /dev/null
@@ -139,7 +139,9 @@ else
                                 then    
                                         userdel -r "$nombre" &> /dev/null
 
-                                fi      
+                                fi    
+						else
+						  	echo "Campo invalido"
                         fi
                 done < "$2"
         else
